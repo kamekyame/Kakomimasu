@@ -337,6 +337,27 @@ const webRoutes = () => {
 
   return router;
 };
+/*
+const addBoard = async (req: ServerRequest) => {
+  try {
+    Deno.mkdirSync("./board", { recursive: true });
+    for (const dirEntry of Deno.readDirSync("./log")) {
+      //console.log(dirEntry.name);
+      const json = JSON.parse(Deno.readTextFileSync(`./log/${dirEntry.name}`));
+      logGames.push(json);
+    }
+
+    await req.respond({
+      status: 200,
+      headers: new Headers({
+        "content-type": "application/json",
+      }),
+      body: JSON.stringify(logGames),
+    });
+  } catch (e) {
+    await req.respond(util.ErrorResponse(e.message));
+  }
+}*/
 
 const apiRoutes = () => {
   const router = createRouter();

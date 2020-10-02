@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="icon" type="image/png" href="/img/kakomimasu-icon.png">
+        <link rel="apple-touch-icon" href="/img/kakomimasu-icon.png">
+
+        <title>ボード投稿 - 囲みマス</title>
+    </head>
+
+    <body>
+        <header></header>
+        <div id="input-div">
+            <div id="file-select">
+                ボード情報をローカルから選択
+                <input id="inputFieldJson" type="file" accept="application/json">
+            </div>
+        </div>
+        <div id="view-div">
+            <form id="inputView">
+                <label>幅：{{board.width}}</label>
+                <label>高さ：{{board.height}}</label>
+                <label>ポイント：
+                    <table id="point-table">
+                        <tr v-for="y of board.height">
+                            <td v-for="x of parseInt(board.width)">{{board.points[(x - 1) + (y - 1) * board.width]}}
+                            </td>
+                        </tr>
+                    </table>
+                </label>
+                <label>エージェント数：{{board.nagent}}</label>
+                <label>ターン数：{{board.nturn}}</label>
+                <label>1ターンの秒数（未指定時3秒）：{{board.nsec}}</label>
+                <label>プレイヤー数（未指定時2人）：{{board.nplayer}}</label>
+
+                <input type="submit" value="ボード情報をサーバに登録">
+            </form>
+        </div>
+
+        <footer></footer>
+
+        <script type="module">
+            import { createHeader, createFooter, Game, getTurnText } from "/js/util.js";
+
+            createHeader("ボード投稿");
+            createFooter();
+
+
+            const inputVue = new Vue({
+                el: "#inputView",
+                data: {
+                    board: {}
+                },
+                methods: {
+                    update: async function (board) {
+                        this.board = board;
+                        board.points = board.points.flat();
+                    },
+                },
+            });
+
+
+            inputFieldJson.onchange = (e) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    console.log(JSON.parse(reader.result));
+                    inputVue.update(JSON.parse(reader.result));
+                }
+
+                reader.readAsText(e.target.files[0]);
+            }
+
+            inputView.onsubmit = (e) => {
+                e.preventDefault();
+                console.log(inputVue.board);
+            }
+
+        </script>
+    </body>
+
+</html>
+
+<style>
+    #input-div {
+        text-align: center;
+    }
+
+    #file-select {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        padding: 1em;
+        background-color: #FFD595;
+        text-align: center;
+    }
+
+    #file-select input[type="file"] {
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        cursor: pointer;
+    }
+
+    label {
+        display: block;
+    }
+
+    #view-div {
+        margin: 2em;
+        text-align: center;
+    }
+
+    #view-div input[type="submit"] {
+        justify-content: center;
+        background-color: #FFD595;
+        border: none;
+        padding: 1em;
+    }
+
+    #point-table {
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+
+    #point-table td {
+        border: 1px solid black;
+        text-align: center;
+        width: 1.5em;
+        height: 1.5em;
+    }
+</style>
