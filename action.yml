@@ -1,6 +1,6 @@
 # action.yml
-name: 'Deno dockerTest'
-description: 'dockerTest'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
+#name: 'Deno dockerTest'
+#description: 'dockerTest'
+#runs:
+#  using: 'docker'
+#  image: 'Dockerfile'
