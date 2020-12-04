@@ -19,4 +19,4 @@ jobs:
       - name: Use local my-action
         uses: ./
         with:
-          entrypoint: deno run test ./test
+          entrypoint: deno test .\test\
