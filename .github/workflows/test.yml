@@ -14,9 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-    - name: Hello world action step
-      id: hello
-      uses: docker://hayd/deno:1.5.2
-    - name: deno run
-      id: hello
-      run:  deno test ./test
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Use local my-action
+        uses: ./
