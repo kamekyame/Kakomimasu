@@ -7,10 +7,7 @@
 # For more information see: https://github.com/denolib/setup-deno
 
 
-on: 
-  push:
-    branches:
-      - Add-deno-test
+on: [push]
 
 jobs:
   hello_world_job:
@@ -20,4 +17,5 @@ jobs:
     - name: Hello world action step
       id: hello
       uses: docker://hayd/deno:1.5.2
-      run : deno test ./test
+    - name: deno run
+      run:deno test ./test
