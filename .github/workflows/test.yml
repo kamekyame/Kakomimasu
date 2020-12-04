@@ -18,7 +18,3 @@ jobs:
         uses: actions/checkout@v2
       - name: Use local my-action
         uses: ./
-        with: 
-          entrypoint: | 
-            deno cache ./apiserver/apiserver.ts
-            deno test ./test/

@@ -4,5 +4,3 @@ description: 'dockerTest'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  entrypoint: |
-    deno test ./test
